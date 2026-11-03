@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Élevage+</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- En-tête, visible sur toutes les pages -->
+  <header class="entete">
+    <h1>🐔 Élevage+</h1>
+    <p>Gestion technico-économique de votre élevage</p>
+  </header>
+
+  <!-- Zone principale : une seule "page" est visible à la fois -->
+  <main class="contenu">
+
+    <section class="page" id="page-accueil">
+      <h2>Bienvenue</h2>
+      <p>Que voulez-vous faire ?</p>
+      <div class="grille-accueil">
+        <a class="carte" href="#elevage"><span class="carte-icone">🐔</span>Mon élevage</a>
+        <a class="carte" href="#lots"><span class="carte-icone">📦</span>Mes lots</a>
+        <a class="carte" href="#suivi"><span class="carte-icone">⚖️</span>Suivi zootechnique</a>
+        <a class="carte" href="#depenses"><span class="carte-icone">💰</span>Dépenses</a>
+        <a class="carte" href="#ventes"><span class="carte-icone">🛒</span>Ventes</a>
+                <a class="carte" href="#tableau"><span class="carte-icone">📊</span>Tableau de bord</a>
+      </div>
+
+      <div class="resume-lot bloc-sauvegarde">
+        <h3>💾 Sauvegarde de vos données</h3>
+        <p class="sous-titre" id="derniere-sauvegarde"></p>
+        <p class="note-calcul">
+          Vos données sont conservées dans ce navigateur, sur cet appareil. Elles peuvent être
+          perdues si les données du navigateur sont effacées. Faites régulièrement une sauvegarde.
+        </p>
+        <button type="button" id="btn-exporter" class="bouton bouton-large">⬇️ Sauvegarder mes données</button>
+        <button type="button" id="btn-importer" class="bouton bouton-secondaire bouton-large">⬆️ Restaurer depuis un fichier</button>
+        <input type="file" id="fichier-import" accept=".json,application/json" hidden>
+        <p id="info-sauvegarde" class="message"></p>
+
+        <details class="options-avancees">
+          <summary>Options avancées</summary>
+          <button type="button" id="btn-effacer" class="bouton bouton-danger bouton-large">🗑️ Effacer toutes mes données</button>
+        </details>
+      </div>
+    </section>
+
+    <!-- MODULE : MON ÉLEVAGE -->
+    <section class="page" id="page-elevage">
+      <h2>🐔 Mon élevage</h2>
+      <p>Renseignez les informations générales de votre exploitation. Les champs marqués * sont obligatoires.</p>
+
+      <form id="form-elevage" novalidate>
+
+        <div class="champ">
+          <label for="code_exploitation">Nom ou code de l'exploitation *</label>
+          <input type="text" id="code_exploitation" maxlength="40" placeholder="Ex : EXP-001">
+          <span class="erreur" id="erreur-code_exploitation"></span>
+        </div>
+
+        <div class="champ">
+          <label for="nom_eleveur">Nom de l'éleveur *</label>
+          <input type="text" id="nom_eleveur" maxlength="60">
+          <span class="erreur" id="erreur-nom_eleveur"></span>
+        </div>
+
+        <div class="champ">
+          <label for="region">Région *</label>
+          <input type="text" id="region" value="Ouest">
+          <span class="erreur" id="erreur-region"></span>
+        </div>
+
+        <div class="champ">
+          <label for="departement">Département *</label>
+          <input type="text" id="departement" value="Menoua">
+          <span class="erreur" id="erreur-departement"></span>
+        </div>
+
+        <div class="champ">
+          <label for="arrondissement">Arrondissement *</label>
+          <input type="text" id="arrondissement" list="liste-arrondissements" placeholder="Ex : Dschang">
+          <datalist id="liste-arrondissements">
+            <option value="Dschang">
+            <option value="Fokoué">
+            <option value="Fongo-Tongo">
+            <option value="Nkong-Ni">
+            <option value="Penka-Michel">
+            <option value="Santchou">
+          </datalist>
+          <span class="erreur" id="erreur-arrondissement"></span>
+        </div>
+
+        <div class="champ">
+          <label for="localite">Localité (quartier, village)</label>
+          <input type="text" id="localite" maxlength="60">
+          <span class="erreur" id="erreur-localite"></span>
+        </div>
+
+        <div class="champ">
+          <label for="espece">Espèce</label>
+          <input type="text" id="espece" value="Poulet de chair" readonly>
+        </div>
+
+        <div class="champ">
+          <label for="orientation">Orientation de production</label>
+          <input type="text" id="orientation" value="Production de viande (chair)" readonly>
+        </div>
+
+        <div class="champ">
+          <label for="type_elevage">Type d'élevage *</label>
+          <select id="type_elevage">
+            <option value="">-- Choisir --</option>
+            <option value="Traditionnel">Traditionnel</option>
+            <option value="Semi-intensif">Semi-intensif</option>
+            <option value="Intensif">Intensif</option>
+          </select>
+          <span class="erreur" id="erreur-type_elevage"></span>
+        </div>
+
+        <div class="champ">
+          <label for="effectif_actuel">Effectif actuel (nombre de poulets) *</label>
+          <input type="number" id="effectif_actuel" min="0" step="1" inputmode="numeric">
+          <span class="erreur" id="erreur-effectif_actuel"></span>
+        </div>
+
+        <div class="champ">
+          <label for="annee_debut">Année de début d'activité *</label>
+          <input type="number" id="annee_debut" min="1950" step="1" inputmode="numeric" placeholder="Ex : 2022">
+          <span class="erreur" id="erreur-annee_debut"></span>
+        </div>
+
+        <button type="submit" class="bouton bouton-large">💾 Enregistrer</button>
+        <p id="message-elevage" class="message"></p>
+
+      </form>
+    </section>
+
+        <!-- MODULE : MES LOTS -->
+    <section class="page" id="page-lots">
+      <h2>📦 Mes lots</h2>
+
+      <!-- Affiché seulement si aucune exploitation n'est enregistrée -->
+      <p id="lots-alerte" class="a-construire" hidden>
+        Enregistrez d'abord les informations de votre exploitation dans
+        <a href="#elevage">Mon élevage</a> avant de créer un lot.
+      </p>
+
+      <div id="lots-contenu">
+        <button type="button" id="btn-nouveau-lot" class="bouton bouton-large">➕ Nouveau lot</button>
+
+        <form id="form-lot" class="formulaire-lot" hidden novalidate>
+          <h3 id="titre-form-lot">➕ Nouveau lot</h3>
+
+          <div class="champ">
+            <label for="lot_nom">Nom ou numéro du lot *</label>
+            <input type="text" id="lot_nom" maxlength="40" placeholder="Ex : Lot 001">
+            <span class="erreur" id="erreur-lot_nom"></span>
+          </div>
+
+          <div class="champ">
+            <label for="lot_espece">Espèce</label>
+            <input type="text" id="lot_espece" value="Poulet de chair" readonly>
+          </div>
+
+          <div class="champ">
+            <label for="lot_souche">Souche / race *</label>
+            <select id="lot_souche">
+              <option value="">-- Choisir --</option>
+              <option value="Cobb 500">Cobb 500</option>
+              <option value="Ross 308">Ross 308</option>
+              <option value="Hubbard">Hubbard</option>
+              <option value="Arbor Acres">Arbor Acres</option>
+              <option value="Autre">Autre</option>
+              <option value="Non précisée">Non précisée</option>
+            </select>
+            <span class="erreur" id="erreur-lot_souche"></span>
+          </div>
+
+          <div class="champ">
+            <label for="lot_date">Date de mise en élevage *</label>
+            <input type="date" id="lot_date">
+            <span class="erreur" id="erreur-lot_date"></span>
+          </div>
+
+          <div class="champ">
+            <label for="lot_effectif">Effectif initial (nombre de poussins) *</label>
+            <input type="number" id="lot_effectif" min="1" step="1" inputmode="numeric">
+            <span class="erreur" id="erreur-lot_effectif"></span>
+          </div>
+
+          <div class="champ">
+            <label for="lot_objectif">Objectif de production *</label>
+            <select id="lot_objectif">
+              <option value="">-- Choisir --</option>
+              <option value="Vente de poulets vivants">Vente de poulets vivants</option>
+              <option value="Vente de viande (poulets abattus)">Vente de viande (poulets abattus)</option>
+              <option value="Vente mixte (vivants et viande)">Vente mixte (vivants et viande)</option>
+              <option value="Consommation familiale">Consommation familiale</option>
+            </select>
+            <span class="erreur" id="erreur-lot_objectif"></span>
+          </div>
+
+          <div class="champ">
+            <label for="lot_mode">Mode d'élevage *</label>
+            <select id="lot_mode">
+              <option value="">-- Choisir --</option>
+              <option value="Sur litière (au sol)">Sur litière (au sol)</option>
+              <option value="En cage (batterie)">En cage (batterie)</option>
+              <option value="Avec parcours (plein air)">Avec parcours (plein air)</option>
+            </select>
+            <span class="erreur" id="erreur-lot_mode"></span>
+          </div>
+
+          <div class="champ">
+            <label for="lot_observation">Observation</label>
+            <textarea id="lot_observation" rows="3" maxlength="300"></textarea>
+            <span class="erreur" id="erreur-lot_observation"></span>
+          </div>
+
+          <button type="submit" class="bouton bouton-large">💾 Enregistrer le lot</button>
+          <button type="button" id="btn-annuler-lot" class="bouton bouton-secondaire bouton-large">Annuler</button>
+          <p id="message-lot" class="message"></p>
+        </form>
+
+        <h3>Liste des lots</h3>
+        <div id="liste-lots"></div>
+      </div>
+    </section>
+
+        <!-- MODULE : SUIVI ZOOTECHNIQUE -->
+    <section class="page" id="page-suivi">
+      <h2>⚖️ Suivi zootechnique</h2>
+
+      <!-- Texte rempli par suivi.js si on ne peut pas encore saisir un suivi -->
+      <p id="suivi-alerte" class="a-construire" hidden></p>
+
+      <div id="suivi-contenu">
+
+        <div class="champ">
+          <label for="suivi_lot_select">Lot concerné</label>
+          <select id="suivi_lot_select"></select>
+        </div>
+
+        <div id="suivi-resume" class="resume-lot"></div>
+
+        <button type="button" id="btn-nouveau-suivi" class="bouton bouton-large">➕ Nouveau suivi</button>
+
+        <form id="form-suivi" class="formulaire-lot" hidden novalidate>
+          <h3 id="titre-form-suivi">➕ Nouveau suivi</h3>
+
+          <div class="champ">
+            <label for="suivi_date">Date du suivi *</label>
+            <input type="date" id="suivi_date">
+            <span class="erreur" id="erreur-suivi_date"></span>
+          </div>
+
+          <div class="champ">
+            <label for="suivi_vivant">Effectif vivant à cette date *</label>
+            <input type="number" id="suivi_vivant" min="0" step="1" inputmode="numeric">
+            <span class="erreur" id="erreur-suivi_vivant"></span>
+          </div>
+
+          <div class="champ">
+            <label for="suivi_morts">Morts depuis le suivi précédent *</label>
+            <input type="number" id="suivi_morts" min="0" step="1" inputmode="numeric">
+            <small class="aide">Pour le premier suivi : morts depuis la mise en élevage.</small>
+            <span class="erreur" id="erreur-suivi_morts"></span>
+          </div>
+
+          <div class="champ">
+            <label for="suivi_poids">Poids moyen (kg) *</label>
+            <input type="number" id="suivi_poids" min="0" step="0.001" inputmode="decimal" placeholder="Ex : 0,15">
+            <small class="aide">0,15 kg = 150 g.</small>
+            <span class="erreur" id="erreur-suivi_poids"></span>
+          </div>
+
+          <div class="champ">
+            <label for="suivi_aliment">Aliment consommé depuis le suivi précédent (kg) *</label>
+            <input type="number" id="suivi_aliment" min="0" step="0.1" inputmode="decimal">
+            <small class="aide">Aliment distribué moins les restes. Mettez 0 pour le premier suivi.</small>
+            <span class="erreur" id="erreur-suivi_aliment"></span>
+          </div>
+
+          <div class="champ">
+            <label for="suivi_observation">Observation</label>
+            <textarea id="suivi_observation" rows="3" maxlength="300"></textarea>
+          </div>
+
+          <button type="submit" class="bouton bouton-large">💾 Enregistrer le suivi</button>
+          <button type="button" id="btn-annuler-suivi" class="bouton bouton-secondaire bouton-large">Annuler</button>
+          <p id="message-suivi" class="message"></p>
+        </form>
+
+        <p id="info-suivi" class="message"></p>
+
+        <h3>Historique des suivis</h3>
+        <div id="liste-suivis"></div>
+      </div>
+    </section>
+
+        <!-- MODULE : DÉPENSES -->
+    <section class="page" id="page-depenses">
+      <h2>💰 Dépenses</h2>
+
+      <!-- Affiché seulement si aucune exploitation n'est enregistrée -->
+      <p id="dep-alerte" class="a-construire" hidden>
+        Enregistrez d'abord les informations de votre exploitation dans
+        <a href="#elevage">Mon élevage</a> avant d'enregistrer des dépenses.
+      </p>
+
+      <div id="dep-contenu">
+
+        <div class="champ">
+          <label for="dep_filtre">Afficher</label>
+          <select id="dep_filtre"></select>
+        </div>
+
+        <div id="dep-resume" class="resume-lot"></div>
+
+        <button type="button" id="btn-nouvelle-dep" class="bouton bouton-large">➕ Nouvelle dépense</button>
+
+        <form id="form-dep" class="formulaire-lot" hidden novalidate>
+          <h3 id="titre-form-dep">➕ Nouvelle dépense</h3>
+
+          <div class="champ">
+            <label for="dep_date">Date *</label>
+            <input type="date" id="dep_date">
+            <span class="erreur" id="erreur-dep_date"></span>
+          </div>
+
+          <div class="champ">
+            <label for="dep_categorie">Catégorie *</label>
+            <select id="dep_categorie">
+              <option value="">-- Choisir --</option>
+              <option value="Aliment">Aliment</option>
+              <option value="Médicaments / soins vétérinaires">Médicaments / soins vétérinaires</option>
+              <option value="Achat d'animaux">Achat d'animaux</option>
+              <option value="Main-d'œuvre">Main-d'œuvre</option>
+              <option value="Transport">Transport</option>
+              <option value="Matériel / équipement">Matériel / équipement</option>
+              <option value="Eau / électricité">Eau / électricité</option>
+              <option value="Construction / aménagement">Construction / aménagement</option>
+              <option value="Autre">Autre</option>
+            </select>
+            <span class="erreur" id="erreur-dep_categorie"></span>
+          </div>
+
+          <div class="champ">
+            <label for="dep_description">Description *</label>
+            <input type="text" id="dep_description" maxlength="80" placeholder="Ex : 2 sacs d'aliment démarrage">
+            <span class="erreur" id="erreur-dep_description"></span>
+          </div>
+
+          <div class="champ">
+            <label for="dep_montant">Montant (FCFA) *</label>
+            <input type="number" id="dep_montant" min="1" step="1" inputmode="numeric">
+            <small class="relecture-date" id="relecture-montant"></small>
+            <span class="erreur" id="erreur-dep_montant"></span>
+          </div>
+
+          <div class="champ">
+            <label for="dep_portee">Cette dépense concerne *</label>
+            <select id="dep_portee">
+              <option value="">-- Choisir --</option>
+              <option value="lot">Un lot précis (aliment, poussins, soins…)</option>
+              <option value="elevage">L'élevage de poulets en général (poulailler, matériel…)</option>
+              <option value="generale">Une dépense générale (autres activités, usage mélangé)</option>
+            </select>
+            <span class="erreur" id="erreur-dep_portee"></span>
+          </div>
+
+          <div class="champ" id="groupe-dep-lot" hidden>
+            <label for="dep_lot">Lot concerné *</label>
+            <select id="dep_lot"></select>
+            <span class="erreur" id="erreur-dep_lot"></span>
+          </div>
+
+          <div class="champ">
+            <label for="dep_observation">Observation</label>
+            <textarea id="dep_observation" rows="3" maxlength="300"></textarea>
+          </div>
+
+          <button type="submit" class="bouton bouton-large">💾 Enregistrer la dépense</button>
+          <button type="button" id="btn-annuler-dep" class="bouton bouton-secondaire bouton-large">Annuler</button>
+          <p id="message-dep" class="message"></p>
+        </form>
+
+        <p id="info-dep" class="message"></p>
+
+        <h3>Liste des dépenses</h3>
+        <div id="liste-dep"></div>
+      </div>
+    </section>
+
+        <!-- MODULE : VENTES -->
+    <section class="page" id="page-ventes">
+      <h2>🛒 Ventes</h2>
+
+      <!-- Affiché seulement si aucune exploitation n'est enregistrée -->
+      <p id="ven-alerte" class="a-construire" hidden>
+        Enregistrez d'abord les informations de votre exploitation dans
+        <a href="#elevage">Mon élevage</a> avant d'enregistrer des ventes.
+      </p>
+
+      <div id="ven-contenu">
+
+        <div class="champ">
+          <label for="ven_filtre">Afficher</label>
+          <select id="ven_filtre"></select>
+        </div>
+
+        <div id="ven-resume" class="resume-lot"></div>
+
+        <button type="button" id="btn-nouvelle-ven" class="bouton bouton-large">➕ Nouvelle vente</button>
+
+        <form id="form-ven" class="formulaire-lot" hidden novalidate>
+          <h3 id="titre-form-ven">➕ Nouvelle vente</h3>
+
+          <div class="champ">
+            <label for="ven_date">Date *</label>
+            <input type="date" id="ven_date">
+            <span class="erreur" id="erreur-ven_date"></span>
+          </div>
+
+          <div class="champ">
+            <label for="ven_produit">Produit vendu *</label>
+            <select id="ven_produit">
+              <option value="">-- Choisir --</option>
+              <option value="Poulets vivants">Poulets vivants</option>
+              <option value="Viande (poulets abattus)">Viande (poulets abattus)</option>
+              <option value="Autre produit">Autre produit (fientes, sacs vides…)</option>
+            </select>
+            <span class="erreur" id="erreur-ven_produit"></span>
+          </div>
+
+          <div class="champ">
+            <label for="ven_portee">Cette vente concerne *</label>
+            <select id="ven_portee">
+              <option value="">-- Choisir --</option>
+              <option value="lot">Un lot précis</option>
+              <option value="generale">Une vente générale (pas liée à un lot)</option>
+            </select>
+            <span class="erreur" id="erreur-ven_portee"></span>
+          </div>
+
+          <div class="champ" id="groupe-ven-lot" hidden>
+            <label for="ven_lot">Lot concerné *</label>
+            <select id="ven_lot"></select>
+            <span class="erreur" id="erreur-ven_lot"></span>
+          </div>
+
+          <div class="champ">
+            <label for="ven_unite">Unité de vente *</label>
+            <select id="ven_unite"></select>
+            <span class="erreur" id="erreur-ven_unite"></span>
+          </div>
+
+          <div class="champ">
+            <label for="ven_quantite">Quantité vendue *</label>
+            <input type="number" id="ven_quantite" min="0" step="0.01" inputmode="decimal">
+            <span class="erreur" id="erreur-ven_quantite"></span>
+          </div>
+
+          <div class="champ" id="groupe-ven-nb" hidden>
+            <label for="ven_nb">Nombre de poulets concernés *</label>
+            <input type="number" id="ven_nb" min="1" step="1" inputmode="numeric">
+            <small class="aide">Vente au kilo : indiquez combien de poulets ont été vendus.</small>
+            <span class="erreur" id="erreur-ven_nb"></span>
+          </div>
+
+          <div class="champ">
+            <label for="ven_prix">Prix unitaire (FCFA, par unité choisie) *</label>
+            <input type="number" id="ven_prix" min="1" step="1" inputmode="numeric">
+            <small class="relecture-date" id="relecture-vente"></small>
+            <span class="erreur" id="erreur-ven_prix"></span>
+          </div>
+
+          <div class="champ">
+            <label for="ven_client">Client ou destination</label>
+            <input type="text" id="ven_client" maxlength="60" placeholder="Ex : Marché de Dschang">
+          </div>
+
+          <div class="champ">
+            <label for="ven_observation">Observation</label>
+            <textarea id="ven_observation" rows="3" maxlength="300"></textarea>
+          </div>
+
+          <button type="submit" class="bouton bouton-large">💾 Enregistrer la vente</button>
+          <button type="button" id="btn-annuler-ven" class="bouton bouton-secondaire bouton-large">Annuler</button>
+          <p id="message-ven" class="message"></p>
+        </form>
+
+        <p id="info-ven" class="message"></p>
+
+        <h3>Liste des ventes</h3>
+        <div id="liste-ven"></div>
+      </div>
+    </section>
+
+        <!-- MODULE : TABLEAU DE BORD -->
+    <section class="page" id="page-tableau">
+      <h2>📊 Tableau de bord</h2>
+
+      <!-- Texte rempli par tableau.js si on ne peut pas encore afficher de synthèse -->
+      <p id="tab-alerte" class="a-construire" hidden></p>
+
+      <div id="tab-contenu">
+        <div class="champ">
+          <label for="tab_vue">Vue</label>
+          <select id="tab_vue"></select>
+        </div>
+        <div id="tab-resultat"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Barre de navigation fixe en bas de l'écran -->
+  <nav class="barre-nav">
+    <a class="nav-lien" href="#accueil"  data-page="accueil"><span>🏠</span>Accueil</a>
+    <a class="nav-lien" href="#elevage"  data-page="elevage"><span>🐔</span>Élevage</a>
+    <a class="nav-lien" href="#lots"     data-page="lots"><span>📦</span>Lots</a>
+    <a class="nav-lien" href="#suivi"    data-page="suivi"><span>⚖️</span>Suivi</a>
+    <a class="nav-lien" href="#depenses" data-page="depenses"><span>💰</span>Dépenses</a>
+    <a class="nav-lien" href="#ventes"   data-page="ventes"><span>🛒</span>Ventes</a>
+    <a class="nav-lien" href="#tableau"  data-page="tableau"><span>📊</span>Bilan</a>
+  </nav>
+
+  <!-- L'ordre compte : le stockage d'abord, puis le module, puis la navigation -->
+  <script src="js/dates.js"></script>
+  <script src="js/stockage.js"></script>
+  <script src="js/calculs.js"></script>
+  <script src="js/exploitation.js"></script>
+  <script src="js/lots.js"></script>
+  <script src="js/suivi.js"></script>
+  <script src="js/depenses.js"></script>
+  <script src="js/ventes.js"></script>
+  <script src="js/tableau.js"></script>
+  <script src="js/sauvegarde.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,498 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7f2;
+  color: #222;
+  font-size: 18px;
+  padding-bottom: 80px;
+}
+
+/* ---------- En-tête ---------- */
+.entete {
+  background: #2e7d32;
+  color: white;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.entete h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.entete p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+}
+
+/* ---------- Contenu ---------- */
+.contenu {
+  padding: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.a-construire {
+  background: #fff8e1;
+  border-left: 5px solid #f9a825;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* ---------- Accueil : grosses cartes ---------- */
+.grille-accueil {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.carte {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 10px;
+  text-align: center;
+  text-decoration: none;
+  color: #222;
+  font-weight: bold;
+  font-size: 1rem;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.carte:active {
+  background: #e8f5e9;
+}
+
+.carte-icone {
+  font-size: 2rem;
+}
+
+/* ---------- Barre de navigation en bas ---------- */
+.barre-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background: white;
+  border-top: 2px solid #c8e6c9;
+}
+
+.nav-lien {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 2px;
+  min-height: 60px;
+  text-decoration: none;
+  color: #555;
+  font-size: 0.62rem;
+}
+
+.nav-lien span {
+  font-size: 1.3rem;
+}
+
+.nav-lien.active {
+  color: #2e7d32;
+  font-weight: bold;
+  background: #e8f5e9;
+}
+
+/* ---------- Boutons ---------- */
+.bouton {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 1rem;
+  min-height: 48px;
+  cursor: pointer;
+}
+
+.bouton:hover {
+  background: #1b5e20;
+}
+
+.bouton-large {
+  width: 100%;
+}
+
+/* ---------- Formulaires ---------- */
+.champ {
+  margin-bottom: 16px;
+}
+
+.champ label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.champ input,
+.champ select {
+  width: 100%;
+  font-size: 1rem;
+  padding: 12px;
+  min-height: 48px;
+  border: 2px solid #bdbdbd;
+  border-radius: 8px;
+  background: white;
+}
+
+.champ input:focus,
+.champ select:focus {
+  outline: none;
+  border-color: #2e7d32;
+}
+
+.champ input[readonly] {
+  background: #eeeeee;
+  color: #555;
+}
+
+.erreur {
+  display: block;
+  color: #c62828;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.message {
+  margin-top: 12px;
+  padding: 0;
+  font-weight: bold;
+}
+
+.message-ok {
+  color: #2e7d32;
+}
+
+.message-erreur {
+  color: #c62828;
+}
+/* ---------- Module Lots ---------- */
+[hidden] {
+  display: none !important;
+}
+
+.champ textarea {
+  width: 100%;
+  font-size: 1rem;
+  padding: 12px;
+  border: 2px solid #bdbdbd;
+  border-radius: 8px;
+  background: white;
+  font-family: Arial, sans-serif;
+}
+
+.champ textarea:focus {
+  outline: none;
+  border-color: #2e7d32;
+}
+
+.formulaire-lot {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.bouton-secondaire {
+  background: #eeeeee;
+  color: #222;
+  margin-top: 10px;
+}
+
+.bouton-secondaire:hover {
+  background: #dddddd;
+}
+
+.bouton-danger {
+  background: #c62828;
+}
+
+.bouton-danger:hover {
+  background: #8e0000;
+}
+
+.carte-lot {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.carte-lot h4 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.carte-lot p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+}
+
+.actions-lot {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.actions-lot .bouton {
+  flex: 1;
+  margin-top: 0;
+}
+
+.vide {
+  color: #666;
+  font-style: italic;
+}
+
+/* ---------- Module Suivi zootechnique ---------- */
+.aide {
+  display: block;
+  color: #666;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.resume-lot {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.resume-lot h3 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+}
+
+.sous-titre {
+  margin: 0 0 12px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.grille-indicateurs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.indicateur {
+  background: #f1f8e9;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.indicateur .valeur {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.indicateur .nom {
+  display: block;
+  font-size: 0.78rem;
+  color: #555;
+}
+
+.note-calcul {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 12px 0 0;
+  line-height: 1.4;
+}
+
+.message-avert {
+  color: #e65100;
+}
+
+#btn-nouveau-suivi {
+  margin-bottom: 12px;
+}
+/* ---------- Relecture de la date en toutes lettres ---------- */
+.relecture-date {
+  display: block;
+  margin-top: 6px;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+/* ---------- Module Dépenses ---------- */
+.indicateur-total {
+  margin-bottom: 12px;
+}
+
+.titre-repartition {
+  margin: 14px 0 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.ligne-repartition {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 0.9rem;
+}
+
+.ligne-repartition span:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.badge-portee {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge-portee.elevage {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.badge-portee.generale {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+/* ---------- Tableau de bord ---------- */
+.ligne-eco {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eeeeee;
+  font-size: 0.95rem;
+}
+
+.ligne-eco span:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ligne-eco.fort {
+  font-weight: bold;
+  font-size: 1.02rem;
+  border-bottom: 2px solid #c8e6c9;
+}
+
+.positif {
+  color: #2e7d32;
+}
+
+.negatif {
+  color: #c62828;
+}
+
+.lecture {
+  background: #f1f8e9;
+  border-left: 5px solid #2e7d32;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.lecture p {
+  margin: 6px 0 0;
+}
+
+.tableau-defilant {
+  overflow-x: auto;
+}
+
+.tableau-lots {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.tableau-lots th,
+.tableau-lots td {
+  padding: 8px 6px;
+  text-align: right;
+  border-bottom: 1px solid #eeeeee;
+  white-space: nowrap;
+}
+
+.tableau-lots th:first-child,
+.tableau-lots td:first-child {
+  text-align: left;
+}
+
+.lexique {
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.lexique summary {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lexique p {
+  margin: 10px 0 0;
+  line-height: 1.4;
+}
+
+/* ---------- Sauvegarde ---------- */
+.bloc-sauvegarde {
+  margin-top: 24px;
+}
+
+.bloc-sauvegarde .bouton {
+  margin-top: 10px;
+}
+
+.options-avancees {
+  margin-top: 16px;
+  font-size: 0.9rem;
+}
+
+.options-avancees summary {
+  cursor: pointer;
+  color: #555;
+}
